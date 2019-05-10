@@ -4,6 +4,13 @@
     <div class="col-12">
         <div class="">
             <h1>Task Management</h1>
+            @if(Session::has('success'))
+                <p>{{Session::get('success')}}</p>
+            @endif
+
+            @if(Session::has('update'))
+                <p>{{Session::get('update')}}</p>
+            @endif
             <a href="{{route('tasks.create')}}" class="btn btn-warning btn-sm">Create</a>
             <table class="table">
                 <thead>

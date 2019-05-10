@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
@@ -19,9 +21,10 @@ class TaskController extends Controller
         return view('tasks.create');
     }
 
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
         $task = new Task();
+        Session::flash('success', 'Create Complete');
         $task->title = $request->input('title');
         $task->content = $request->input('content');
         $task->due_date = $request->input('due_date');
@@ -43,9 +46,10 @@ class TaskController extends Controller
         return view('tasks.edit', compact('task'));
     }
 
-    public function update(Request $request, $id)
+    public function update(TaskRequest $request, $id)
     {
         $task = Task::findOrFail($id);
+        Session::flash('update', 'Update Complete');
         $task->title = $request->input('title');
         $task->content = $request->input('content');
         $task->due_date = $request->input('due_date');
@@ -77,4 +81,7 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->route('tasks.index');
     }
+
+
 }
+
